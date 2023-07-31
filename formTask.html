@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        #myForm {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 94%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 16px;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #0099ff;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #0099ff;
+            color: #ffffff;
+            border: none;
+            border-radius: 3px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #007acc;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            margin-top: -15px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="myForm">
+        <h1>Login</h1>
+        <input type="text" name="username" placeholder="Username">
+        <input type="email" name="email" placeholder="Email">
+        <input type="password" name="password" placeholder="Password">
+        <input type="password" name="confirmPassword" placeholder="Confirm Password">
+        <p class="error-message" id="errorMessage"></p>
+        <button type="submit">Submit</button>
+    </form>
+
+
+    <script>
+        const form = document.getElementById("myForm");
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const username = form.elements.username.value;
+            const email = form.elements.email.value;
+            const password = form.elements.password.value;
+            const confirmPassword = form.elements.confirmPassword.value;
+
+            if (username.trim() === "" || email.trim() === "" || password.trim() === "" || confirmPassword.trim() === "") {
+                errorMessage.textContent = "All fields are required.";
+                return;
+            }
+
+            if (email.trim() === "") {
+                errorMessage.textContent = "All fields are required.";
+                return;
+            } else if (!validateEmail(email)) {
+                errorMessage.textContent = "Invalid email format.";
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                errorMessage.textContent = "Passwords do not match.";
+                return;
+            }
+
+            form.submit();
+        });
+
+        function validateEmail(email) {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailPattern.test(email);
+        }
+    </script>
+
+</body>
+
+</html>
